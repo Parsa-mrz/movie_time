@@ -1,10 +1,10 @@
 import ListBox from "./ListBox.jsx";
 import WatchedBox from "./WatchedBox.jsx";
 
-export default function Main(){
+export default function Main({children}){
     return(
         <main className="main">
-            <ListBox/>
+            {children}
             <WatchedBox/>
         </main>
     )

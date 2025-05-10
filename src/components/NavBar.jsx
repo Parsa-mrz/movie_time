@@ -1,12 +1,12 @@
-import Logo from './Logo.jsx'
+import Logo from "./Logo.jsx";
 import Search from "./Search.jsx";
-import NumResults from "./NumResults.jsx";
-export default function NavBar(){
+
+export default function NavBar({children}){
     return(
         <nav className="nav-bar">
             <Logo/>
             <Search/>
-            <NumResults/>
+            {children}
         </nav>
     )
 }
