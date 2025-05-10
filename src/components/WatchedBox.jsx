@@ -1,6 +1,4 @@
 import {useState} from "react";
-import WatchedSummary from "./WatchedSummary.jsx";
-import WatchedList from "./WatchedList.jsx";
 const tempWatchedData = [
     {
         imdbID: "tt1375666",
@@ -24,11 +22,9 @@ const tempWatchedData = [
     },
 ];
 
-
 export default function WatchedBox(){
     const [isOpen2, setIsOpen2] = useState(true);
     const [watched, setWatched] = useState(tempWatchedData);
-
     return(
         <div className="box">
             <button
@@ -39,8 +35,6 @@ export default function WatchedBox(){
             </button>
             {isOpen2 && (
                 <>
-                <WatchedSummary watched={watched}/>
-                <WatchedList watched={watched}/>
                 </>
             )}
         </div>
