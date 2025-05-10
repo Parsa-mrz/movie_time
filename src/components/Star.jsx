@@ -1,4 +1,13 @@
-export default function Star({onRate, full, onHoverIn, onHoverOut, size, color}) {
+export default function Star(
+    {
+        onRate,
+        full,
+        onHoverIn,
+        onHoverOut,
+        size,
+        color
+    }
+) {
     const starStyles = {
         width: `${size}px`,
         height: `${size}px`,

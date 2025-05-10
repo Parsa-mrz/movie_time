@@ -1,13 +1,15 @@
 import Star from "./Star.jsx";
 import {useState} from "react";
 
-export default function StarRating({
-                                       maxRating = 5,
-                                       color = "#fcc419",
-                                       size = 48,
-                                       messages = [],
-                                       defaultRating = 0
-                                   }) {
+export default function StarRating(
+    {
+        maxRating = 5,
+        color = "#fcc419",
+        size = 48,
+        messages = [],
+        defaultRating = 0
+    }
+) {
     const [rating, setRating] = useState(defaultRating)
     const [tempRate, setTempRate] = useState(0)
 
