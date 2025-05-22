@@ -1,11 +1,13 @@
 import NavBar from "./components/NavBar.jsx";
 import Main from "./components/Main.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import NumResults from "./components/NumResults.jsx";
 import Box from "./components/Box.jsx";
 import MovieList from "./components/MovieList.jsx";
 import WatchedSummary from "./components/WatchedSummary.jsx";
 import WatchedList from "./components/WatchedList.jsx";
+import Loader from "./components/Loader.jsx";
+import Search from "./components/Search.jsx";
 
 const tempMovieData = [
     {
@@ -52,19 +54,57 @@ const tempWatchedData = [
         userRating: 9,
     },
 ];
+const KEY = "d447c90d";
+const tempQuery = "interstellar";
 
 export default function App() {
-    const [movies, setMovies] = useState(tempMovieData);
+    const [query, setQuery] = useState("");
+    const [movies, setMovies] = useState([]);
     const [watched, setWatched] = useState(tempWatchedData);
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("Loading...");
+
+    useEffect(() => {
+        async function fetchMovies() {
+            try {
+                setIsLoading(true);
+                const res = await fetch(
+                    `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
+                );
+                if (!res.ok) {
+                    throw new Error("Something went wrong with fetching movies");
+                }
+                const data = await res.json();
+                if (data.Response === "False") {
+                    throw new Error(data.Error);
+                }
+                setMovies(data.Search);
+                setIsLoading(false);
+            } catch (err) {
+                setErrorMessage(err.message);
+            }
+        }
+
+        if (query.length < 3) {
+            setMovies([]);
+            setErrorMessage('');
+            setIsLoading(false);
+            return;
+        }
+
+        fetchMovies();
+    }, [query]);
 
     return (
         <>
             <NavBar>
+                <Search query={query} setQuery={setQuery}/>
                 <NumResults movies={movies}/>
             </NavBar>
             <Main>
                 <Box>
-                    <MovieList movies={movies}/>
+                    {isLoading && <Loader>{errorMessage}</Loader>}
+                    {!isLoading && <MovieList movies={movies}/>}
                 </Box>
                 <Box>
                     <WatchedSummary watched={watched}/>
@@ -74,5 +114,3 @@ export default function App() {
         </>
     );
 }
-
-
