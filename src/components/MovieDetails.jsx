@@ -58,11 +58,25 @@ export default function MovieDetails({
     }, [selectedId]);
 
     useEffect(() => {
-        document.title = `Movie | ${movie.Title}`
+        function callback(e) {
+            if (e.code === "Escape") {
+                onCloseMovie();
+            }
+        }
+
+        document.addEventListener("keydown", callback);
 
         return function () {
-            document.title = 'Movie Platform'
-        }
+            document.removeEventListener("keydown", callback);
+        };
+    }, [onCloseMovie]);
+
+    useEffect(() => {
+        document.title = `Movie | ${movie.Title}`;
+
+        return function () {
+            document.title = "Movie Platform";
+        };
     }, [movie.Title]);
 
     return (
