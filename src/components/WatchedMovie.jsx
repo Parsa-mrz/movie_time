@@ -1,7 +1,7 @@
-export default function WatchedMovie({movie}){
-    return(
+export default function WatchedMovie({movie}) {
+    return (
         <li key={movie.imdbID}>
-            <img src={movie.Poster} alt={`${movie.Title} poster`} />
+            <img src={movie.Poster} alt={`${movie.Title} poster`}/>
             <h3>{movie.Title}</h3>
             <div>
                 <p>
@@ -14,7 +14,8 @@ export default function WatchedMovie({movie}){
                 </p>
                 <p>
                     <span>⏳</span>
-                    <span>{movie.runtime} min</span>
+                    <span>{movie.Runtime} min</span>
+                    {console.log(movie)}
                 </p>
             </div>
         </li>

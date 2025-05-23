@@ -60,18 +60,22 @@ const KEY = "d447c90d";
 export default function App() {
     const [query, setQuery] = useState("");
     const [movies, setMovies] = useState([]);
-    const [watched, setWatched] = useState(tempWatchedData);
+    const [watched, setWatched] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("Loading...");
     const [selectedId, setSelectedId] = useState(null);
 
     const handleSelectMovie = (id) => {
-        setSelectedId((selectedId) => id === selectedId ? null : id)
-    }
+        setSelectedId((selectedId) => (id === selectedId ? null : id));
+    };
 
     const handleCloseMovieDetail = () => {
-        setSelectedId(null)
-    }
+        setSelectedId(null);
+    };
+
+    const handleAddWatched = (movie) => {
+        setWatched((watched) => [...watched, movie]);
+    };
 
     useEffect(() => {
         async function fetchMovies() {
@@ -112,12 +116,17 @@ export default function App() {
             <Main>
                 <Box>
                     {isLoading && <Loader>{errorMessage}</Loader>}
-                    {!isLoading && <MovieList onSelectMovie={handleSelectMovie}
-                                              movies={movies}/>}
+                    {!isLoading && (
+                        <MovieList onSelectMovie={handleSelectMovie} movies={movies}/>
+                    )}
                 </Box>
                 <Box>
                     {selectedId ? (
-                        <MovieDetails onCloseMovie={handleCloseMovieDetail} selectedId={selectedId}/>
+                        <MovieDetails
+                            onCloseMovie={handleCloseMovieDetail}
+                            selectedId={selectedId}
+                            onAddWatched={handleAddWatched}
+                        />
                     ) : (
                         <>
                             <WatchedSummary watched={watched}/>
