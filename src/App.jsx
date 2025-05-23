@@ -66,6 +66,7 @@ export default function App() {
             setIsLoading(false);
             return;
         }
+        handleCloseMovieDetail()
         fetchMovies();
 
         return function () {
