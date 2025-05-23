@@ -59,6 +59,10 @@ export default function MovieDetails({
 
     useEffect(() => {
         document.title = `Movie | ${movie.Title}`
+
+        return function () {
+            document.title = 'Movie Platform'
+        }
     }, [movie.Title]);
 
     return (
