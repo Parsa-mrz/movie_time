@@ -4,10 +4,21 @@ import Loader from "./Loader.jsx";
 
 const KEY = "d447c90d";
 
-export default function MovieDetails({selectedId, onCloseMovie, onAddWatched}) {
+export default function MovieDetails({
+                                         selectedId,
+                                         onCloseMovie,
+                                         onAddWatched,
+                                         watched,
+                                     }) {
     const [movie, setMovie] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [userRating, setUserRating] = useState(null);
+
+    const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
+
+    const watchedUserRating = watched.find(
+        (movie) => movie.imdbID === selectedId,
+    )?.userRating;
 
     const handleAdd = () => {
         if (!userRating) return;
@@ -23,7 +34,7 @@ export default function MovieDetails({selectedId, onCloseMovie, onAddWatched}) {
             userRating,
         };
         onAddWatched(newWatchedMovie);
-        onCloseMovie()
+        onCloseMovie();
     };
 
     useEffect(() => {
@@ -68,11 +79,22 @@ export default function MovieDetails({selectedId, onCloseMovie, onAddWatched}) {
                     </header>
                     <section>
                         <div className="rating">
-                            <StarRating maxRating={10} size={24} onSetRating={setUserRating}/>
+                            {!isWatched ? (
+                                <>
+                                    <StarRating
+                                        maxRating={10}
+                                        size={24}
+                                        onSetRating={setUserRating}
+                                    />
+
+                                    <button className="btn-add" onClick={handleAdd}>
+                                        + Add to list
+                                    </button>
+                                </>
+                            ) : (
+                                <p>You rated this movie ⭐️{watchedUserRating}</p>
+                            )}
                         </div>
-                        <button className='btn-add' onClick={handleAdd}>
-                            + Add to list
-                        </button>
                         <p>
                             <em>{movie.Plot}</em>
                         </p>

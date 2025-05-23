@@ -15,7 +15,6 @@ export default function WatchedMovie({movie}) {
                 <p>
                     <span>⏳</span>
                     <span>{movie.Runtime} min</span>
-                    {console.log(movie)}
                 </p>
             </div>
         </li>
