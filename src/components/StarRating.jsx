@@ -1,38 +1,39 @@
 import Star from "./Star.jsx";
 import {useState} from "react";
 
-export default function StarRating(
-    {
-        maxRating = 5,
-        color = "#fcc419",
-        size = 48,
-        messages = [],
-        defaultRating = 0,
-        onSetRating,
-    }
-) {
-    const [rating, setRating] = useState(defaultRating)
-    const [tempRate, setTempRate] = useState(0)
+export default function StarRating({
+                                       maxRating = 5,
+                                       color = "#fcc419",
+                                       size = 48,
+                                       messages = [],
+                                       defaultRating = 0,
+                                       onSetRating,
+                                   }) {
+    const [rating, setRating] = useState(defaultRating);
+    const [tempRate, setTempRate] = useState(0);
 
     const textStyle = {
-        lineHeight: '1',
-        margin: '0',
+        lineHeight: "1",
+        margin: "0",
         color: color,
-        fontSize: `${size / 2}px`
-    }
+        fontSize: `${size / 2}px`,
+    };
 
     const handleRating = (i) => {
-        setRating(i + 1);
-        onSetRating(rating)
-    }
+        const newRating = i + 1;
+        setRating(newRating);
+        onSetRating?.(newRating);
+    };
 
     return (
-        <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '16px'
-        }}>
-            <div style={{display: 'flex'}}>
+        <div
+            style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "16px",
+            }}
+        >
+            <div style={{display: "flex"}}>
                 {Array.from({length: maxRating}, (_, i) => (
                     <Star
                         key={i}
@@ -45,11 +46,11 @@ export default function StarRating(
                     />
                 ))}
             </div>
-            <p style={textStyle}>{
-                messages.length === maxRating
+            <p style={textStyle}>
+                {messages.length === maxRating
                     ? messages[tempRate ? tempRate - 1 : rating - 1]
-                    : tempRate || rating || ''
-            }</p>
+                    : tempRate || rating || ""}
+            </p>
         </div>
-    )
+    );
 }
